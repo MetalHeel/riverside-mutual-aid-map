@@ -1,56 +1,71 @@
-<script>
-	function initMap() {
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.onreadystatechange = function() {
-			if (!xmlHttp.response) {
-				return;
-			}
-			setupMap(JSON.parse(xmlHttp.response).feed.entry);
-		}
-		xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json", true);
-		xmlHttp.send(null);
-	}
-
-	function setupMap(entries) {
-		var location = {
-			lat: 51.486, 
-			lng: -3.199
-		};
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 15,
-			center: location
-		});
-		var geocoder = new google.maps.Geocoder;
-	  
-		var rowIndex = 8;
-		var justDoThree = 1;
-		while (true) {
-			if (justDoThree == 3) {
-				break;
-			}
-			if (entries[rowIndex].content["$t"] === "Grand Total") {
-				break;
-			}
-			geocoder.geocode({
-				componentRestrictions: {
-					country: 'UK',
-					postalCode: entries[rowIndex + 3].content["$t"]
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" href="https://img.icons8.com/cotton/2x/like.png" type="image/png" sizes="16x16">
+		
+		<script>
+			function initMap() {
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.onreadystatechange = function() {
+					if (!xmlHttp.response) {
+						return;
+					}
+					var volunteerData = null;
+					try {
+						volunteerData = JSON.parse(xmlHttp.response);
+					} catch (error) {
+						return;
+					}
+					setupMap(volunteerData.feed.entry);
 				}
-			}, function(results, status) {
-				if (status == 'OK') {
-					map.setCenter(results[0].geometry.location);
-					var marker = new google.maps.Marker({
-						position: results[0].geometry.location,
-						map: map
+				xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json", true);
+				xmlHttp.send(null);
+			}
+
+			function setupMap(entries) {
+				var location = {
+					lat: 51.486, 
+					lng: -3.199
+				};
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 15,
+					center: location
+				});
+				var geocoder = new google.maps.Geocoder;
+			  
+				var rowIndex = 8;
+				var justDoThree = 1;
+				while (true) {
+					if (justDoThree == 3) {
+						break;
+					}
+					if (entries[rowIndex].content["$t"] === "Grand Total") {
+						break;
+					}
+					geocoder.geocode({
+						componentRestrictions: {
+							country: 'UK',
+							postalCode: entries[rowIndex + 3].content["$t"]
+						}
+					}, function(results, status) {
+						if (status == 'OK') {
+							map.setCenter(results[0].geometry.location);
+							var marker = new google.maps.Marker({
+								position: results[0].geometry.location,
+								map: map
+							});
+						}
 					});
+					rowIndex += 7;
+					justDoThree++;
 				}
-			});
-			rowIndex += 7;
-			justDoThree++;
-		}
-	}
-</script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vc1RPEOEOOeqHIzTMsbWyNo8gk-sw_0&callback=initMap"></script>
-
-<div id="map" style="width:100%; height:100%;"></div>
+			}
+		</script>
+		
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vc1RPEOEOOeqHIzTMsbWyNo8gk-sw_0&callback=initMap"></script>
+	</head>
+	
+	<body>
+		<div id="map" style="width:100%; height:100%;"></div>
+	</body>
+</html>
