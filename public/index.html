@@ -31,6 +31,7 @@
 		var geocoder = new google.maps.Geocoder;
 	  
 		var rowIndex = 8;
+		var limitExceeded = false;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
@@ -47,7 +48,10 @@
 						map: map
 					});
 				} else {
-					console.log(rowIndex);
+					if (!limitExceeded) {
+						console.log(rowIndex);
+						limitExceeded = true;
+					}
 				}
 			});
 			rowIndex += 8;
