@@ -7,15 +7,13 @@
 			function initMap() {
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.onreadystatechange = function() {
+					if (xmlHttp.readyState != 4) {
+						return;
+					}
 					if (!xmlHttp.response) {
 						return;
 					}
-					var volunteerData = null;
-					try {
-						volunteerData = JSON.parse(xmlHttp.response);
-					} catch (error) {
-						return;
-					}
+					var volunteerData = JSON.parse(xmlHttp.response);
 					setupMap(volunteerData.feed.entry);
 				}
 				xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json", true);
@@ -34,11 +32,7 @@
 				var geocoder = new google.maps.Geocoder;
 			  
 				var rowIndex = 8;
-				var justDoThree = 1;
 				while (true) {
-					if (justDoThree == 3) {
-						break;
-					}
 					if (entries[rowIndex].content["$t"] === "Grand Total") {
 						break;
 					}
@@ -56,8 +50,7 @@
 							});
 						}
 					});
-					rowIndex += 7;
-					justDoThree++;
+					rowIndex += 8;
 				}
 			}
 		</script>
