@@ -44,6 +44,8 @@
 						position: results[0].geometry.location,
 						map: map
 					});
+				} else {
+					console.log("Could not add " + entries[rowIndex + 1].content["$t"] + " at " + entries[rowIndex + 3].content["$t"]);
 				}
 			});
 			rowIndex += 8;
