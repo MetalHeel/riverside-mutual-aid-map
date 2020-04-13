@@ -45,6 +45,7 @@
 					return;
 				}
 				var responseJson = JSON.parse(xmlHttp.response);
+				console.log(responseJson);
 				var marker = new google.maps.Marker({
 					position: responseJson.results[0].geometry.location,
 					map: map
