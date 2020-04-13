@@ -13,6 +13,7 @@
 					if (!xmlHttp.response) {
 						return;
 					}
+					alert("We're about to set up a map.");
 					var volunteerData = JSON.parse(xmlHttp.response);
 					setupMap(volunteerData.feed.entry);
 				}
