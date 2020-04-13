@@ -48,13 +48,13 @@
 						map: map
 					});
 				} else {
-					if (!limitExceeded) {
-						console.log(rowIndex);
-						limitExceeded = true;
-					}
+					console.log(status);
 				}
 			});
 			rowIndex += 8;
+			if (rowIndex == 360) {
+				await new Promise(r => setTimeout(r, 2000));
+			}
 		}
 	}
 </script>
