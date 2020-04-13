@@ -35,25 +35,21 @@
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			var geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + entries[rowIndex + 3].content["$t"] + "&key=AIzaSyD8vc1RPEOEOOeqHIzTMsbWyNo8gk-sw_0";
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState != 4) {
-					return;
+			geocoder.geocode({
+				componentRestrictions: {
+					country: 'UK',
+					postalCode: entries[rowIndex + 3].content["$t"]
 				}
-				if (!xmlHttp.response) {
-					return;
+			}, function(results, status) {
+				if (status == 'OK') {
+					var marker = new google.maps.Marker({
+						position: results[0].geometry.location,
+						map: map
+					});
+				} else {
+					console.log(rowIndex);
 				}
-				var responseJson = JSON.parse(xmlHttp.response);
-				console.log(responseJson);
-				var marker = new google.maps.Marker({
-					position: responseJson.results[0].geometry.location,
-					map: map
-				});
-			}
-			xmlHttp.open("GET", geocodeUrl, true);
-			xmlHttp.send(null);
-			
+			});
 			rowIndex += 8;
 		}
 	}
