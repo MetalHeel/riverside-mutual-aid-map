@@ -32,29 +32,30 @@
 	}
 	
 	function createMarkers(map, entries) {
-		var geocoder = new google.maps.Geocoder;
 		var rowIndex = 8;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			setTimeout(function(entry) {
-				geocoder.geocode({
-					componentRestrictions: {
-						country: 'UK',
-						postalCode: entry
-					}
-				}, function(results, status) {
-					if (status == 'OK') {
-						var marker = new google.maps.Marker({
-							position: results[0].geometry.location,
-							map: map
-						});
-					} else {
-						console.log(status);
-					}
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState != 4) {
+					return;
+				}
+				if (!xmlHttp.response) {
+					return;
+				}
+				var locationData = JSON.parse(xmlHttp.response);
+				var marker = new google.maps.Marker({
+					position: {
+						lat: locationData.result.latitude,
+						lng: locationData.result.longitude
+					},
+					map: map
 				});
-			}, rowIndex % 8 * 500, entries[rowIndex + 3].content["$t"]);
+			}
+			xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + entries[rowIndex + 3].content["$t"], true);
+			xmlHttp.send(null);
 			rowIndex += 8;
 		}
 	}
