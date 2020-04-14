@@ -31,7 +31,7 @@
 		var geocoder = new google.maps.Geocoder;
 	  
 		var rowIndex = 8;
-		var limitExceeded = false;
+		var numberSuccesses = 0;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
@@ -47,15 +47,10 @@
 						position: results[0].geometry.location,
 						map: map
 					});
-				} else {
-					console.log(status);
+					numberSuccesses++;
 				}
 			});
 			rowIndex += 8;
-			if (rowIndex == 360) {
-				var start = new Date().getTime();
-				while (new Date().getTime() - start < 2000) {}
-			}
 		}
 	}
 </script>
