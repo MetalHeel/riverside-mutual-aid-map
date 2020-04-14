@@ -38,11 +38,11 @@
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			setTimeout(function() {
+			setTimeout(function(entry) {
 				geocoder.geocode({
 					componentRestrictions: {
 						country: 'UK',
-						postalCode: entries[rowIndex + 3].content["$t"]
+						postalCode: entry
 					}
 				}, function(results, status) {
 					if (status == 'OK') {
@@ -54,7 +54,7 @@
 						console.log(status);
 					}
 				});
-			}, rowIndex % 8 * 500);
+			}, rowIndex % 8 * 500, entries[rowIndex + 3].content["$t"]);
 			rowIndex += 8;
 		}
 	}
