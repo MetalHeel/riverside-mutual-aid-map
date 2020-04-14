@@ -20,13 +20,12 @@
 	}
 
 	function setupMap(entries) {
-		var location = {
-			lat: 51.486, 
-			lng: -3.199
-		};
 		var map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 15,
-			center: location
+			center: {
+				lat: 51.486, 
+				lng: -3.199
+			}
 		});
 		createMarkers(map, entries);
 	}
@@ -53,12 +52,18 @@
 			}
 			var locationData = JSON.parse(xmlHttp.response);
 			locationData.result.forEach(entry => {
+				var infowindow = new google.maps.InfoWindow({
+					content: entry.result.postcode
+				});
 				var marker = new google.maps.Marker({
 					position: {
 						lat: entry.result.latitude,
 						lng: entry.result.longitude
 					},
 					map: map
+				});
+				marker.addListener('click', function() {
+					infowindow.open(map, marker);
 				});
 			});
 		}
