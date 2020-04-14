@@ -52,14 +52,15 @@
 				return;
 			}
 			var locationData = JSON.parse(xmlHttp.response);
-			console.log(locationData);
-			/*var marker = new google.maps.Marker({
-				position: {
-					lat: locationData.result.latitude,
-					lng: locationData.result.longitude
-				},
-				map: map
-			});*/
+			locationData.result.forEach(entry => {
+				var marker = new google.maps.Marker({
+					position: {
+						lat: entry.result.latitude,
+						lng: entry.result.longitude
+					},
+					map: map
+				});
+			});
 		}
 		xmlHttp.open("POST", "https://api.postcodes.io/postcodes");
 		xmlHttp.setRequestHeader("Content-Type", "application/json");
