@@ -46,6 +46,7 @@
 					return;
 				}
 				var locationData = JSON.parse(xmlHttp.response);
+				console.log(locationData.result.latitude + " " + locationData.result.longitude);
 				var marker = new google.maps.Marker({
 					position: {
 						lat: locationData.result.latitude,
