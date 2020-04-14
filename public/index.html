@@ -71,12 +71,12 @@
 			var locationData = JSON.parse(xmlHttp.response);
 			locationData.result.forEach(entry => {
 				var infoWindowContent = "";
-				for (var i = 0; i < markerData[entry].volunteers.length; i++) {
-					infoWindowContent += "<p>" + markerData[entry].volunteers[i] + 
-						" - Training Date: " + markerData[entry].trainingDates[i] + 
-						", Street Champion: " + markerData[entry].streetChampion[i] + 
-						", Trained: " + markerData[entry].trained[i] + 
-						", Interested in Being Street Champion: " + markerData[entry].interestedInChampion[i] + "</p>";
+				for (var i = 0; i < markerData[entry.result.postcode].volunteers.length; i++) {
+					infoWindowContent += "<p>" + markerData[entry.result.postcode].volunteers[i] + 
+						" - Training Date: " + markerData[entry.result.postcode].trainingDates[i] + 
+						", Street Champion: " + markerData[entry.result.postcode].streetChampion[i] + 
+						", Trained: " + markerData[entry.result.postcode].trained[i] + 
+						", Interested in Being Street Champion: " + markerData[entry.result.postcode].interestedInChampion[i] + "</p>";
 				}
 				var infoWindow = new google.maps.InfoWindow({
 					content: infoWindowContent
