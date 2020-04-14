@@ -34,7 +34,6 @@
 	async function createMarkers(map, entries) {
 		var geocoder = new google.maps.Geocoder;
 		var rowIndex = 8;
-		var failed = false;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
@@ -54,10 +53,11 @@
 					failed = true;
 				}
 			});
-			if (failed) {
-				console.log("Failed on " + rowIndex);
-			}
 			rowIndex += 8;
+			if (rowIndex % 5 == 0) {
+				var start = new Date().getTime();
+				while (new Date().getTime() - start < 100) {}
+			}
 		}
 	}
 </script>
