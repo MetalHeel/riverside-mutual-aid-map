@@ -32,33 +32,38 @@
 	}
 	
 	function createMarkers(map, entries) {
+		var postalCodes = [];
 		var rowIndex = 8;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState != 4) {
-					return;
-				}
-				if (!xmlHttp.response) {
-					return;
-				}
-				var locationData = JSON.parse(xmlHttp.response);
-				console.log(locationData.result.latitude + " " + locationData.result.longitude);
-				var marker = new google.maps.Marker({
-					position: {
-						lat: locationData.result.latitude,
-						lng: locationData.result.longitude
-					},
-					map: map
-				});
+			if (!postalCodes.includes(entries[rowIndex + 3].content["$t"])) {
+				postalCodes.push(entries[rowIndex + 3].content["$t"]);
 			}
-			xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + entries[rowIndex + 3].content["$t"], true);
-			xmlHttp.send(null);
 			rowIndex += 8;
 		}
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState != 4) {
+				return;
+			}
+			if (!xmlHttp.response) {
+				return;
+			}
+			var locationData = JSON.parse(xmlHttp.response);
+			console.log(locationData);
+			/*var marker = new google.maps.Marker({
+				position: {
+					lat: locationData.result.latitude,
+					lng: locationData.result.longitude
+				},
+				map: map
+			});*/
+		}
+		xmlHttp.open("POST", "https://api.postcodes.io/postcodes", true);
+		xmlHttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify({"postcodes" : postalCodes}));
 	}
 </script>
 
