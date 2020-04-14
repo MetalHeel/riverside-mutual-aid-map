@@ -28,15 +28,18 @@
 			zoom: 15,
 			center: location
 		});
+		createMarkers(entries);
+	}
+	
+	async function createMarkers(entries) {
 		var geocoder = new google.maps.Geocoder;
 	  
 		var rowIndex = 8;
-		var numberSuccesses = 0;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			geocoder.geocode({
+			await geocoder.geocode({
 				componentRestrictions: {
 					country: 'UK',
 					postalCode: entries[rowIndex + 3].content["$t"]
@@ -47,12 +50,10 @@
 						position: results[0].geometry.location,
 						map: map
 					});
-					numberSuccesses++;
 				}
 			});
 			rowIndex += 8;
 		}
-		console.log(numberSuccesses + " successes");
 	}
 </script>
 
