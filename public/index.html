@@ -32,14 +32,32 @@
 	
 	function createMarkers(map, entries) {
 		var postalCodes = [];
+		var markerData = {};
 		var rowIndex = 8;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			if (!postalCodes.includes(entries[rowIndex + 3].content["$t"])) {
-				postalCodes.push(entries[rowIndex + 3].content["$t"]);
+			var postalCode = entries[rowIndex + 3].content["$t"];
+			postalCode = postalCode.replace(/\s+/g, '');
+			postalCode = postalCode.toLowerCase();
+			if (!postalCodes.includes(postalCode)) {
+				postalCodes.push(postalCode);
 			}
+			if (!markerData.hasOwnProperty(postalCode)) {
+				markerData[postalCode] = {
+					"volunteers": [],
+					"trainingDates": [],
+					"streetChampion": [],
+					"trained": [],
+					"interestedInChampion": []
+				};
+			}
+			markerData[postalCode].volunteers.push(entries[rowIndex + 1].content["$t"]);
+			markerData[postalCode].trainingDates.push(entries[rowIndex + 4].content["$t"]);
+			markerData[postalCode].streetChampion.push(entries[rowIndex + 5].content["$t"]);
+			markerData[postalCode].trained.push(entries[rowIndex + 6].content["$t"]);
+			markerData[postalCode].interestedInChampion.push(entries[rowIndex + 7].content["$t"]);
 			rowIndex += 8;
 		}
 		var xmlHttp = new XMLHttpRequest();
@@ -52,8 +70,16 @@
 			}
 			var locationData = JSON.parse(xmlHttp.response);
 			locationData.result.forEach(entry => {
-				var infowindow = new google.maps.InfoWindow({
-					content: entry.result.postcode
+				var infoWindowContent = "";
+				for (var i = 0; i < markerData[entry].volunteers.length; i++) {
+					infoWindowContent += "<p>" + markerData[entry].volunteers[i] + 
+						" - Training Date: " + markerData[entry].trainingDates[i] + 
+						", Street Champion: " + markerData[entry].streetChampion[i] + 
+						", Trained: " + markerData[entry].trained[i] + 
+						", Interested in Being Street Champion: " + markerData[entry].interestedInChampion[i] + "</p>";
+				}
+				var infoWindow = new google.maps.InfoWindow({
+					content: infoWindowContent
 				});
 				var marker = new google.maps.Marker({
 					position: {
@@ -63,7 +89,7 @@
 					map: map
 				});
 				marker.addListener('click', function() {
-					infowindow.open(map, marker);
+					infoWindow.open(map, marker);
 				});
 			});
 		}
