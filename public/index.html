@@ -61,9 +61,9 @@
 				map: map
 			});*/
 		}
-		xmlHttp.open("POST", "https://api.postcodes.io/postcodes", true);
+		xmlHttp.open("POST", "https://api.postcodes.io/postcodes");
 		xmlHttp.setRequestHeader("Content-Type", "application/json");
-		xmlhttp.send(JSON.stringify({"postcodes" : postalCodes}));
+		xmlHttp.send(JSON.stringify({"postcodes" : postalCodes}));
 	}
 </script>
 
