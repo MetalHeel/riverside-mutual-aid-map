@@ -31,33 +31,31 @@
 		createMarkers(map, entries);
 	}
 	
-	async function createMarkers(map, entries) {
+	function createMarkers(map, entries) {
 		var geocoder = new google.maps.Geocoder;
 		var rowIndex = 8;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
 				break;
 			}
-			await geocoder.geocode({
-				componentRestrictions: {
-					country: 'UK',
-					postalCode: entries[rowIndex + 3].content["$t"]
-				}
-			}, function(results, status) {
-				if (status == 'OK') {
-					var marker = new google.maps.Marker({
-						position: results[0].geometry.location,
-						map: map
-					});
-				} else {
-					failed = true;
-				}
-			});
+			setTimeout(function() {
+				geocoder.geocode({
+					componentRestrictions: {
+						country: 'UK',
+						postalCode: entries[rowIndex + 3].content["$t"]
+					}
+				}, function(results, status) {
+					if (status == 'OK') {
+						var marker = new google.maps.Marker({
+							position: results[0].geometry.location,
+							map: map
+						});
+					} else {
+						console.log(status);
+					}
+				});
+			}, rowIndex % 8 * 500);
 			rowIndex += 8;
-			if (rowIndex % 5 == 0) {
-				var start = new Date().getTime();
-				while (new Date().getTime() - start < 1000) {}
-			}
 		}
 	}
 </script>
