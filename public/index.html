@@ -28,12 +28,11 @@
 			zoom: 15,
 			center: location
 		});
-		createMarkers(entries);
+		createMarkers(map, entries);
 	}
 	
-	async function createMarkers(entries) {
+	async function createMarkers(map, entries) {
 		var geocoder = new google.maps.Geocoder;
-	  
 		var rowIndex = 8;
 		while (true) {
 			if (entries[rowIndex].content["$t"] === "Grand Total") {
