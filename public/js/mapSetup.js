@@ -31,12 +31,12 @@ function setupMap(entries) {
 function createAreas(map) {
 	Object.keys(areas).forEach(function (key) {
 		var area = new google.maps.Polygon({
-          paths: areas[key].vertices,
-          strokeColor: areas[key].lineColor,
-          strokeOpacity: 1.0,
-          strokeWeight: 1,
-          fillColor: areas[key].fillColor,
-          fillOpacity: 0.5
+			paths: areas[key].vertices,
+			strokeColor: areas[key].lineColor,
+			strokeOpacity: 1.0,
+			strokeWeight: 1,
+			fillColor: areas[key].fillColor,
+			fillOpacity: 0.5
         });
         area.setMap(map);
 	});
