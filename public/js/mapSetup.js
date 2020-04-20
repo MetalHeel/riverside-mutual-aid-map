@@ -34,7 +34,7 @@ function createAreas(map) {
 			paths: areas[key].vertices,
 			strokeColor: areas[key].lineColor,
 			strokeOpacity: 1.0,
-			strokeWeight: 1,
+			strokeWeight: 2.0,
 			fillColor: areas[key].fillColor,
 			fillOpacity: 0.5
         });
