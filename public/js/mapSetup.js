@@ -37,8 +37,8 @@ function createAreas(map) {
 			strokeWeight: 2.0,
 			fillColor: areas[key].fillColor,
 			fillOpacity: 0.5
-        });
-        area.setMap(map);
+		});
+		area.setMap(map);
 	});
 }
 
