@@ -24,7 +24,13 @@ function setupMap(entries) {
 			lng: -3.199
 		}
 	});
+	createAreas();
 	createMarkers(map, entries);
+}
+
+function createAreas() {
+	Object.keys(areas).forEach(function (key) {
+	});
 }
 
 function createMarkers(map, entries) {
