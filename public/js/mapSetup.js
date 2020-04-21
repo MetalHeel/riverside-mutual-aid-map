@@ -46,7 +46,7 @@ function createAreas(map) {
 		area.setMap(map);
 		// Create the hover label.
 		var infoWindow = new google.maps.InfoWindow({
-			content: '<h1>' + key + '</h1>'
+			content: '<h3>' + key + '</h3>'
 		});
 		area.addListener('mouseover', function() {
 			infoWindow.setPosition(areas[key].vertices[0]);
