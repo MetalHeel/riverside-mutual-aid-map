@@ -24,6 +24,9 @@ function setupMap(entries) {
 			lng: -3.199
 		}
 	});
+	map.addListener('click', function() {
+		closeAllInfoWindows();
+	});
 	createAreas(map);
 	createMarkers(map, entries);
 }
