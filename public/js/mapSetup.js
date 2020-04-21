@@ -29,7 +29,9 @@ function setupMap(entries) {
 }
 
 function createAreas(map) {
+	var legend = document.getElementById('legend');
 	Object.keys(areas).forEach(function (key) {
+		// Create the polygon.
 		var area = new google.maps.Polygon({
 			paths: areas[key].vertices,
 			strokeColor: areas[key].lineColor,
@@ -39,8 +41,13 @@ function createAreas(map) {
 			fillOpacity: 0.5
 		});
 		area.setMap(map);
+		//Add to the legend.
+		var div = document.createElement('div');
+		div.innerHTML = '<svg width="20" height="10">' +
+			'<rect width="20" height="20" style="fill:rgb(' + areas[key].fillColor + '); stroke-width:1.8; stroke:rgb(' + areas[key].lineColor + ')" />' +
+		'</svg>' + key;
+		legend.appendChild(div);
 	});
-	var legend = document.getElementById('legend');
 	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 }
 
