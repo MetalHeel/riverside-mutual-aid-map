@@ -49,7 +49,7 @@ function createAreas(map) {
 			content: '<h3>' + key + '</h3>'
 		});
 		area.addListener('mouseover', function() {
-			infoWindow.setPosition(areas[key].vertices[0]);
+			infoWindow.setPosition(getHighestLongitudeCoordinates(areas[key].vertices));
 			infoWindow.open(map);
 		});
 		area.addListener('mouseout', function() {
@@ -157,4 +157,14 @@ function isInfoWindowOpen(infoWindow) {
 
 function closeAllInfoWindows() {
 	infoWindows.forEach(infoWindow => infoWindow.close());
+}
+
+function getHighestLongitudeCoordinates(pairs) {
+	var highest = null;
+	pairs.forEach(function (pair) {
+		if (!highest || pair.lng > highest.lng) {
+			highest = pair;
+		}
+	});
+	return highest;
 }
