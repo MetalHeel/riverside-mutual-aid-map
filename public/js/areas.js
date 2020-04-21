@@ -48,8 +48,8 @@ var areas = {
 			{lat: 51.4799875, lng: -3.196635},
 			{lat: 51.4794563, lng: -3.1988398}
 		],
-		"lineColor": "#4d1427",
-		"fillColor": "#4d1427"
+		"lineColor": "#a1190d",
+		"fillColor": "#a1190d"
 	},
 	"Area 2" : {
 		"vertices": [
@@ -64,8 +64,8 @@ var areas = {
 			{lat: 51.4789451, lng: -3.1963453},
 			{lat: 51.4782836, lng: -3.1991455}
 		],
-		"lineColor": "#4d0000",
-		"fillColor": "#4d0000"
+		"lineColor": "#bf0f70",
+		"fillColor": "#bf0f70"
 	},
 	"Area 3" : {
 		"vertices": [
@@ -97,8 +97,8 @@ var areas = {
 			{lat: 51.477749, lng: -3.1949344},
 			{lat: 51.4772345, lng: -3.1945374}
 		],
-		"lineColor": "#4d4f0e",
-		"fillColor": "#4d4f0e"
+		"lineColor": "#11cbcf",
+		"fillColor": "#11cbcf"
 	},
 	"Area 5" : {
 		"vertices": [
@@ -136,8 +136,8 @@ var areas = {
 			{lat: 51.4810068, lng: -3.1926009},
 			{lat: 51.4806327, lng: -3.1941781}
 		],
-		"lineColor": "#4d6460",
-		"fillColor": "#4d6460"
+		"lineColor": "#c9c90e",
+		"fillColor": "#c9c90e"
 	},
 	"Area 7" : {
 		"vertices": [
@@ -155,8 +155,8 @@ var areas = {
 			{lat: 51.4780083, lng: -3.190728},
 			{lat: 51.4779195, lng: -3.1903546}
 		],
-		"lineColor": "#4d25a8",
-		"fillColor": "#4d25a8"
+		"lineColor": "#9352c4",
+		"fillColor": "#9352c4"
 	},
 	"Area 8" : {
 		"vertices": [
@@ -171,8 +171,8 @@ var areas = {
 			{lat: 51.485597, lng: -3.2018492},
 			{lat: 51.4845914, lng: -3.2036034}
 		],
-		"lineColor": "#4d2f8b",
-		"fillColor": "#4d2f8b"
+		"lineColor": "#cf920e",
+		"fillColor": "#cf920e"
 	},
 	"Area 9" : {
 		"vertices": [
