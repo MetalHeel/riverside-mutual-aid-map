@@ -44,6 +44,16 @@ function createAreas(map) {
 			fillOpacity: 0.5
 		});
 		area.setMap(map);
+		// Create the hover label.
+		var infoWindow = new google.maps.InfoWindow({
+			content: '<h1>' + key + '</h1>'
+		});
+		area.addListener('mouseover', function() {
+			infoWindow.open(map, areas[key].vertices[0]);
+		});
+		area.addListener('mouseout', function() {
+			infoWindow.close();
+		});
 		//Add to the legend.
 		var div = document.createElement('div');
 		div.innerHTML = '<svg width="20" height="13">' +
