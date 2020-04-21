@@ -162,7 +162,7 @@ function closeAllInfoWindows() {
 function getHighestLongitudeCoordinates(pairs) {
 	var highest = null;
 	pairs.forEach(function (pair) {
-		if (!highest || pair.lng > highest.lng) {
+		if (!highest || pair.lng < highest.lng) {
 			highest = pair;
 		}
 	});
