@@ -49,7 +49,8 @@ function createAreas(map) {
 			content: '<h1>' + key + '</h1>'
 		});
 		area.addListener('mouseover', function() {
-			infoWindow.open(map, areas[key].vertices[0]);
+			infoWindow.setPosition(areas[key].vertices[0]);
+			infoWindow.open(map);
 		});
 		area.addListener('mouseout', function() {
 			infoWindow.close();
