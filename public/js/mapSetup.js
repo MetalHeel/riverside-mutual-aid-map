@@ -41,7 +41,7 @@ function createAreas(map) {
 		area.setMap(map);
 	});
 	var legend = document.getElementById('legend');
-	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 }
 
 function createMarkers(map, entries) {

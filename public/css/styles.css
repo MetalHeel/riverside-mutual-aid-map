@@ -1,0 +1,10 @@
+#legend {
+	background: #fff;
+	padding: 10px;
+	margin: 10px;
+	border: 2px solid #000;
+}
+
+#legend h3 {
+	margin-top: 0;
+}
