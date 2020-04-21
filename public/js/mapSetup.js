@@ -44,7 +44,7 @@ function createAreas(map) {
 		//Add to the legend.
 		var div = document.createElement('div');
 		div.innerHTML = '<svg width="20" height="10">' +
-			'<rect width="20" height="20" style="fill:rgb(' + areas[key].fillColor + '); stroke-width:1.8; stroke:rgb(' + areas[key].lineColor + ')" />' +
+			'<rect width="20" height="20" style="fill:' + areas[key].fillColor + '; stroke-width:1.8; stroke:' + areas[key].lineColor + '" />' +
 		'</svg>' + key;
 		legend.appendChild(div);
 	});
