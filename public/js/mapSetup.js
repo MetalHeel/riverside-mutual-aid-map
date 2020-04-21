@@ -45,7 +45,8 @@ function createAreas(map) {
 		var div = document.createElement('div');
 		div.innerHTML = '<svg width="20" height="10">' +
 			'<rect width="20" height="20" style="fill:' + areas[key].fillColor + '; stroke-width:1.8; stroke:' + areas[key].lineColor + '" />' +
-		'</svg>' + key;
+		'</svg>' + 
+		'<span style="padding-left:5px">' + key + '</span>';
 		legend.appendChild(div);
 	});
 	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
