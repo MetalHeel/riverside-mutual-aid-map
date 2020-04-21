@@ -32,8 +32,8 @@ var areas = {
 			{lat: 51.481073, lng: -3.2011508},
 			{lat: 51.4781331, lng: -3.2001749}
 		],
-		"lineColor": "#ffffff",
-		"fillColor": "#ffffff"
+		"lineColor": "#808080",
+		"fillColor": "#808080"
 	},
 	"Area 1" : {
 		"vertices": [
