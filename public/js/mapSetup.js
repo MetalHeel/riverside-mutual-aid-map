@@ -46,7 +46,8 @@ function createAreas(map) {
 		area.setMap(map);
 		// Create the hover label.
 		var infoWindow = new google.maps.InfoWindow({
-			content: '<h3>' + key + '</h3>'
+			content: '<h3>' + key + '</h3>',
+			zIndoex: 1
 		});
 		area.addListener('mouseover', function() {
 			infoWindow.setPosition(getHighestLongitudeCoordinates(areas[key].vertices));
@@ -111,7 +112,8 @@ function createMarkers(map, entries) {
 			postalCode = postalCode.toLowerCase();
 			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode]);
 			var infoWindow = new google.maps.InfoWindow({
-				content: infoWindowContent
+				content: infoWindowContent,
+				zIndex: 2
 			});
 			var marker = new google.maps.Marker({
 				position: {
