@@ -48,6 +48,7 @@ function createAreas(map) {
 		// Create the hover label.
 		var infoWindow = new google.maps.InfoWindow({
 			content: '<h3>' + key + '</h3>',
+			disableAutoPan: true,
 			zIndoex: 1
 		});
 		area.addListener('mouseover', function() {
@@ -110,7 +111,6 @@ function createMarkers(map, entries) {
 			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode]);
 			var infoWindow = new google.maps.InfoWindow({
 				content: infoWindowContent,
-				disableAutoPan: true,
 				zIndex: 2
 			});
 			var marker = new google.maps.Marker({
