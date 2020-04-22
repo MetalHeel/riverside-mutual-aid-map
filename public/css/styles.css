@@ -1,3 +1,43 @@
+.searchContainer {
+	padding-bottom: 10px;
+}
+
+.search {
+	border: none;
+	width: 338;
+	height: 30;
+	font-size: 24px;
+	border-bottom: 1px solid lightgrey;
+}
+
+.searchButton {
+	width: 36px;
+	height: 34px;
+	border: none;
+	background: transparent;
+}
+
+.searchButton:focus {
+	outline: none;
+}
+
+.searchButton:hover .fa {
+	color: darkgrey;
+}
+
+.searchButton:active .fa {
+	color: lightgrey;
+}
+
+.fa {
+	font-size: 24px;
+	color: grey;
+}
+
+.search:focus {
+	outline: none;
+}
+
 #map {
 	width: 100%;
 	height:100%;
