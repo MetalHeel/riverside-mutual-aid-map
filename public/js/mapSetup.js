@@ -193,6 +193,6 @@ function homogenizePostalCode(originalText) {
 
 function normalizePostalCode(originalText) {
 	var normalizedText = originalText.toUpperCase();
-	normalizedText = normalizedText.substring(0, 4) + " " + normalizedText.substring(0, 4);
+	normalizedText = normalizedText.substring(0, 4) + " " + normalizedText.substring(4);
 	return normalizedText;
 }
