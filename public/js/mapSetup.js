@@ -62,7 +62,7 @@ function createAreas() {
 			zIndex: 1
 		});
 		area.addListener('mouseover', function() {
-			infoWindow.setPosition(getHighestLongitudeCoordinates(areas[key].vertices));
+			infoWindow.setPosition(getHighestLatitudeCoordinates(areas[key].vertices));
 			infoWindow.open(map);
 		});
 		area.addListener('mouseout', function() {
@@ -183,7 +183,7 @@ function closeAllInfoWindows() {
 	infoWindows.forEach(infoWindow => infoWindow.close());
 }
 
-function getHighestLongitudeCoordinates(pairs) {
+function getHighestLatitudeCoordinates(pairs) {
 	var highest = null;
 	pairs.forEach(function (pair) {
 		if (!highest || pair.lat > highest.lat) {
