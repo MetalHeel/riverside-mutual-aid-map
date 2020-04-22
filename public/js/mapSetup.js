@@ -148,10 +148,9 @@ function createMarkers(entries) {
 }
 
 function generateVolunteerDataContent(data, postalCode) {
-	var content = "";
+	var content = "<span style=\"font-weight:bold;\">" + normalizePostalCode(postalCode) + "</span>";
 	for (var i = 0; i < data.volunteers.length; i++) {
-		content += "<span style=\"font-weight:bold;\">" + normalizePostalCode(postalCode) + "</span>" +
-			"<h3 style=\"text-align: center;\">" + data.volunteers[i] + "</h3>" +
+		content +=  "<h3 style=\"text-align: center;\">" + data.volunteers[i] + "</h3>" +
 			"<ul>" +
 				"<li>Training Date: " + data.trainingDates[i] + "</li>" +
 				"<li>Street Champion: " + data.streetChampion[i] + "</li>" +
