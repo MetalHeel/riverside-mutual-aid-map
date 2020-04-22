@@ -12,6 +12,7 @@ function initMap() {
 			return;
 		}
 		var volunteerData = JSON.parse(xmlHttp.response);
+		console.log(volunteerData);
 		setupMap(volunteerData.feed.entry);
 	}
 	xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json", true);
