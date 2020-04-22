@@ -2,11 +2,13 @@ var map = null;
 var infoWindows = [];
 var codesToCoordinates = {};
 
-var search = document.getElementById("searchInput");
-search.addEventListener("keyup", function(event) {
-	if (event.keyCode === 13) {
-		document.getElementById("searchButton").click();
-	}
+$(document).ready(function() {
+	var search = document.getElementById("searchInput");
+	search.addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) {
+			document.getElementById("searchButton").click();
+		}
+	});
 });
 
 function initMap() {
