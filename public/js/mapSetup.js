@@ -59,7 +59,7 @@ function createAreas() {
 		var infoWindow = new google.maps.InfoWindow({
 			content: '<h3>' + key + '</h3>',
 			disableAutoPan: true,
-			zIndoex: 1
+			zIndex: 1
 		});
 		area.addListener('mouseover', function() {
 			infoWindow.setPosition(getHighestLongitudeCoordinates(areas[key].vertices));
