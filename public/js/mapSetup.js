@@ -109,7 +109,7 @@ function createMarkers(entries) {
 		var locationData = JSON.parse(xmlHttp.response);
 		locationData.result.forEach(entry => {
 			var postalCode = homogenizePostalCode(entry.result.postcode);
-			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode]);
+			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode], postalCode);
 			var infoWindow = new google.maps.InfoWindow({
 				content: infoWindowContent,
 				zIndex: 2
@@ -138,10 +138,11 @@ function createMarkers(entries) {
 	xmlHttp.send(JSON.stringify({"postcodes" : postalCodes}));
 }
 
-function generateVolunteerDataContent(data) {
+function generateVolunteerDataContent(data, postalCode) {
 	var content = "";
 	for (var i = 0; i < data.volunteers.length; i++) {
-		content += "<h3 style=\"text-align: center;\">" + data.volunteers[i] + "</h3>" +
+		content += "<span style=\"font-weight:bold;\">" + normalizePostalCode(postalCode) + "</span>" +
+			"<h3 style=\"text-align: center;\">" + data.volunteers[i] + "</h3>" +
 			"<ul>" +
 				"<li>Training Date: " + data.trainingDates[i] + "</li>" +
 				"<li>Street Champion: " + data.streetChampion[i] + "</li>" +
@@ -162,7 +163,7 @@ function searchForPostalCode(postalCode) {
 	}
 	map.setCenter(codesToCoordinates[homogenizedPostalCode].position);
 	map.setZoom(17);
-	google.maps.event.trigger(codesToCoordinates[homogenizedPostalCode], 'click')
+	google.maps.event.trigger(codesToCoordinates[homogenizedPostalCode], 'click');
 }
 
 function isInfoWindowOpen(infoWindow) {
@@ -188,4 +189,10 @@ function homogenizePostalCode(originalText) {
 	var homogenizedText = originalText.replace(/\s+/g, '');
 	homogenizedText = homogenizedText.toLowerCase();
 	return homogenizedText;
+}
+
+function normalizePostalCode(originalText) {
+	var normalizedText = originalText.toUpperCase();
+	normalizedText = normalizedText.substring(0, 4) + " " + normalizedText.substring(0, 4);
+	return normalizedText;
 }
