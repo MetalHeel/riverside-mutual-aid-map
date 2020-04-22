@@ -28,6 +28,7 @@ body {
 
 .searchButton:hover .fa {
 	color: darkgrey;
+	cursor: pointer;
 }
 
 .searchButton:active .fa {

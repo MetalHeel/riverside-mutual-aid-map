@@ -1,4 +1,5 @@
 var infoWindows = [];
+var codesToCoordinates = {};
 
 function initMap() {
 	var xmlHttp = new XMLHttpRequest();
@@ -75,9 +76,7 @@ function createMarkers(map, entries) {
 		if (entries[rowIndex].content["$t"] === "Grand Total") {
 			break;
 		}
-		var postalCode = entries[rowIndex + 3].content["$t"];
-		postalCode = postalCode.replace(/\s+/g, '');
-		postalCode = postalCode.toLowerCase();
+		var postalCode = homogenizePostalCode(entries[rowIndex + 3].content["$t"]);
 		if (!postalCodes.includes(postalCode)) {
 			postalCodes.push(postalCode);
 		}
@@ -107,12 +106,11 @@ function createMarkers(map, entries) {
 		}
 		var locationData = JSON.parse(xmlHttp.response);
 		locationData.result.forEach(entry => {
-			var postalCode = entry.result.postcode;
-			postalCode = postalCode.replace(/\s+/g, '');
-			postalCode = postalCode.toLowerCase();
+			var postalCode = homogenizePostalCode(entry.result.postcode);
 			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode]);
 			var infoWindow = new google.maps.InfoWindow({
 				content: infoWindowContent,
+				disableAutoPan: true,
 				zIndex: 2
 			});
 			var marker = new google.maps.Marker({
@@ -130,6 +128,7 @@ function createMarkers(map, entries) {
 				closeAllInfoWindows();
 				infoWindow.open(map, marker);
 			});
+			codesToCoordinates[postalCode] = marker;
 			infoWindows.push(infoWindow);
 		});
 	}
@@ -152,6 +151,15 @@ function generateVolunteerDataContent(data) {
 	return content;
 }
 
+function searchForPostalCode(postalCode) {
+	if (!postalCode) {
+		return;
+	}
+	var homogenizedPostalCode = homogenizePostalCode(postalCode);
+	if (!homogenizedPostalCode in codesToCoordinates) {
+	}
+}
+
 function isInfoWindowOpen(infoWindow) {
 	var map = infoWindow.getMap();
 	return map !== null && typeof map !== "undefined";
@@ -169,4 +177,10 @@ function getHighestLongitudeCoordinates(pairs) {
 		}
 	});
 	return highest;
+}
+
+function homogenizePostalCode(originalText) {
+	var homogenizedText = originalText.replace(/\s+/g, '');
+	homogenizedText = homogenizedText.toLowerCase();
+	return homogenizedText;
 }
