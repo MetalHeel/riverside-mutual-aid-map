@@ -10,8 +10,8 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vc1RPEOEOOeqHIzTMsbWyNo8gk-sw_0&callback=initMap"></script>
 
 <div class="searchContainer">
-	<input class="search" type="text" placeholder="Search...">
-	<button class="searchButton"><i class="fa fa-search"></i></button>
+	<input id="searchInput" class="search" type="text" placeholder="Search...">
+	<button class="searchButton" onclick="searchForPostalCode(document.getElementById('searchInput).value)"><i class="fa fa-search"></i></button>
 </div>
 <div id="map"></div>
 <div id="legend">
