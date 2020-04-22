@@ -161,7 +161,7 @@ function searchForPostalCode(postalCode) {
 		return;
 	}
 	map.setCenter(codesToCoordinates[homogenizedPostalCode].position);
-	map.setZoom(10);
+	map.setZoom(20);
 }
 
 function isInfoWindowOpen(infoWindow) {
