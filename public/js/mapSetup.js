@@ -1,3 +1,4 @@
+var map = null;
 var infoWindows = [];
 var codesToCoordinates = {};
 
@@ -18,7 +19,7 @@ function initMap() {
 }
 
 function setupMap(entries) {
-	var map = new google.maps.Map(document.getElementById('map'), {
+	map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 15,
 		center: {
 			lat: 51.486, 
@@ -32,7 +33,7 @@ function setupMap(entries) {
 	createMarkers(map, entries);
 }
 
-function createAreas(map) {
+function createAreas() {
 	var legend = document.getElementById('legend');
 	Object.keys(areas).forEach(function (key) {
 		// Create the polygon.
@@ -69,7 +70,7 @@ function createAreas(map) {
 	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 }
 
-function createMarkers(map, entries) {
+function createMarkers(entries) {
 	var postalCodes = [];
 	var markerData = {};
 	var rowIndex = 8;
@@ -157,7 +158,10 @@ function searchForPostalCode(postalCode) {
 	}
 	var homogenizedPostalCode = homogenizePostalCode(postalCode);
 	if (!homogenizedPostalCode in codesToCoordinates) {
+		return;
 	}
+	map.setCenter(codesToCoordinates[postalCode].position);
+	map.setZoom(10);
 }
 
 function isInfoWindowOpen(infoWindow) {
