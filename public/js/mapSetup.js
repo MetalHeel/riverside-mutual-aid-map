@@ -160,7 +160,7 @@ function searchForPostalCode(postalCode) {
 	if (!homogenizedPostalCode in codesToCoordinates) {
 		return;
 	}
-	map.setCenter(codesToCoordinates[postalCode].position);
+	map.setCenter(codesToCoordinates[homogenizedPostalCode].position);
 	map.setZoom(10);
 }
 
