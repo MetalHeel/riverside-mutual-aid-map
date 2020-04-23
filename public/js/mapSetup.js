@@ -167,7 +167,7 @@ function searchForPostalCode(postalCode) {
 		return;
 	}
 	var homogenizedPostalCode = homogenizePostalCode(postalCode);
-	if (!homogenizedPostalCode in codesToCoordinates) {
+	if (!(homogenizedPostalCode in codesToCoordinates)) {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState != 4) {
