@@ -189,9 +189,9 @@ function searchForPostalCode(postalCode) {
 					},
 					icon: {
 						path: google.maps.SymbolPath.CIRCLE,
-						fillColor: '#00F',
+						fillColor: '#eb3a13',
 						fillOpacity: 1.0,
-						strokeColor: '#00A',
+						strokeColor: '#eb3a13',
 						strokeOpacity: 1.0,
 						strokeWeight: 1,
 						scale: 7
@@ -203,6 +203,11 @@ function searchForPostalCode(postalCode) {
 					lng: locationData.result.longitude
 				});
 			}
+			map.setCenter({
+				lat: locationData.result.latitude,
+				lng: locationData.result.longitude
+			});
+			map.setZoom(17);
 		}
 		xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + postalCode);
 		xmlHttp.send();
