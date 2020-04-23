@@ -191,7 +191,7 @@ function searchForPostalCode(postalCode) {
 						path: google.maps.SymbolPath.CIRCLE,
 						fillColor: '#eb3a13',
 						fillOpacity: 1.0,
-						strokeColor: '#eb3a13',
+						strokeColor: '#ffffff',
 						strokeOpacity: 1.0,
 						strokeWeight: 1,
 						scale: 10
