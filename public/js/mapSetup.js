@@ -194,7 +194,7 @@ function searchForPostalCode(postalCode) {
 						strokeColor: '#eb3a13',
 						strokeOpacity: 1.0,
 						strokeWeight: 1,
-						scale: 15
+						scale: 10
 					}
 				});
 			} else {
