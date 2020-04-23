@@ -177,7 +177,7 @@ function searchForPostalCode(postalCode) {
 				return;
 			}
 			var locationData = JSON.parse(xmlHttp.response);
-			if (locationData.status === "404") {
+			if (locationData.status == 404) {
 				return;
 			}
 			if (!temporaryMarker) {
@@ -208,10 +208,6 @@ function searchForPostalCode(postalCode) {
 				lng: locationData.result.longitude
 			});
 			map.setZoom(17);
-		}
-		xmlHttp.onerror = function() {
-			// Maybe we'll need to do something later.
-			return;
 		}
 		xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + postalCode);
 		xmlHttp.send();
