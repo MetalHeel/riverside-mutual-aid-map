@@ -204,7 +204,7 @@ function searchForPostalCode(postalCode) {
 				});
 			}
 		}
-		xmlHttp.open("POST", "https://api.postcodes.io/postcodes/" + postalCode);
+		xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + postalCode);
 		xmlHttp.send();
 		return;
 	}
