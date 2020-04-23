@@ -1,4 +1,5 @@
 var map = null;
+var temporaryMarker = null;
 var infoWindows = [];
 var codesToCoordinates = {};
 
@@ -167,6 +168,40 @@ function searchForPostalCode(postalCode) {
 	}
 	var homogenizedPostalCode = homogenizePostalCode(postalCode);
 	if (!homogenizedPostalCode in codesToCoordinates) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState != 4) {
+				return;
+			}
+			if (!xmlHttp.response) {
+				return;
+			}
+			if (temporaryMarker) {
+				temporaryMarker.setMap(null)
+			}
+			var locationData = JSON.parse(xmlHttp.response);
+			if (locationData.status === "404") {
+				return;
+			}
+			temporaryMarker = new google.maps.Marker({
+				map: map,
+				position: {
+					lat: locationData.result.latitude,
+					lng: locationData.result.longitude
+				},
+				icon: {
+					path: google.maps.SymbolPath.CIRCLE,
+					fillColor: '#00F',
+					fillOpacity: 1.0,
+					strokeColor: '#00A',
+					strokeOpacity: 1.0,
+					strokeWeight: 1,
+					scale: 7
+				}
+			});
+		}
+		xmlHttp.open("POST", "https://api.postcodes.io/postcodes/" + postalCode);
+		xmlHttp.send();
 		return;
 	}
 	map.setCenter(codesToCoordinates[homogenizedPostalCode].position);
