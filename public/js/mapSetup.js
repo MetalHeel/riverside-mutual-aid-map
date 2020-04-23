@@ -209,6 +209,10 @@ function searchForPostalCode(postalCode) {
 			});
 			map.setZoom(17);
 		}
+		xmlHttp.onerror = function() {
+			// Maybe we'll need to do something later.
+			return;
+		}
 		xmlHttp.open("GET", "https://api.postcodes.io/postcodes/" + postalCode);
 		xmlHttp.send();
 		return;
