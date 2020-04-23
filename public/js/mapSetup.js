@@ -62,6 +62,9 @@ function createAreas() {
 			disableAutoPan: true,
 			zIndex: 1
 		});
+		area.addListener('click', function() {
+			closeAllInfoWindows();
+		});
 		area.addListener('mouseover', function() {
 			infoWindow.setPosition(getHighestLatitudeCoordinates(areas[key].vertices));
 			infoWindow.open(map);
