@@ -132,6 +132,7 @@ function createMarkers(entries) {
 					lat: entry.result.latitude,
 					lng: entry.result.longitude
 				},
+				label: markerData[postalCode].volunteers.length,
 				map: map
 			});
 			marker.addListener('click', function() {
