@@ -90,6 +90,7 @@ function createMarkers(entries) {
 	while (true) {
 		if (!entries[rowIndex]) {
 			console.error("Unexpectedly reached the end of volunteer entries at row " + rowIndex / 8 + ".");
+			break;
 		}
 		if (entries[rowIndex].content["$t"] === "Grand Total") {
 			break;
