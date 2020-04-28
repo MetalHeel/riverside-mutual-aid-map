@@ -89,10 +89,6 @@ function createMarkers(entries) {
 	var rowIndex = 8;
 	while (true) {
 		if (!entries[rowIndex]) {
-			console.error("Unexpectedly reached the end of volunteer entries. Please check source data.");
-			break;
-		}
-		if (entries[rowIndex].content["$t"] === "Grand Total") {
 			break;
 		}
 		if (!validateVolunteerData(entries, rowIndex)) {
