@@ -164,27 +164,27 @@ function validateVolunteerData(entries, startingIndex) {
 	var postalCodePattern = /^\w{4} ?\w{3}$/gi;
 	var datePattern = /^(\d{1,2}-[a-z]{3}-\d{4}|NA)$/gi;
 	var yesNoPattern = /^(yes|no)$/gi;
-	if (!entries[rowIndex + 1].content["$t"].trim().match(namePattern)) {
+	if (!entries[startingIndex + 1].content["$t"].trim().match(namePattern)) {
 		console.error("Invalid perferred name found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
-	if (!entries[rowIndex + 3].content["$t"].trim().match(postalCodePattern)) {
+	if (!entries[startingIndex + 3].content["$t"].trim().match(postalCodePattern)) {
 		console.error("Invalid postal code found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
-	if (!entries[rowIndex + 4].content["$t"].trim().match(datePattern)) {
+	if (!entries[startingIndex + 4].content["$t"].trim().match(datePattern)) {
 		console.error("Invalid training date found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
-	if (!entries[rowIndex + 5].content["$t"].trim().match(yesNoPattern)) {
+	if (!entries[startingIndex + 5].content["$t"].trim().match(yesNoPattern)) {
 		console.error("Invalid street champion response found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
-	if (!entries[rowIndex + 6].content["$t"].trim().match(yesNoPattern)) {
+	if (!entries[startingIndex + 6].content["$t"].trim().match(yesNoPattern)) {
 		console.error("Invalid trained response found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
-	if (!entries[rowIndex + 7].content["$t"].trim().match(yesNoPattern)) {
+	if (!entries[startingIndex + 7].content["$t"].trim().match(yesNoPattern)) {
 		console.error("Invalid interested in street champion response found at row " + ((startingIndex / 8) + 1) + ".");
 		return false;
 	}
