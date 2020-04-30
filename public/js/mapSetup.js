@@ -340,7 +340,7 @@ function filterAndDisplayData() {
 		}
 		if (volunteers.length == 0) {
 			data.marker.setMap(null);
-			continue;
+			return;;
 		}
 		data.marker.setLabel(volunteers.length.toString(10))
 		data.marker.setMap(map);
