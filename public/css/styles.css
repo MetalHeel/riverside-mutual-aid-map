@@ -30,21 +30,56 @@ body {
 	cursor: pointer;
 }
 
-.searchButton:hover .fa {
+.searchButton:hover .searchIcon {
 	color: darkgrey;
 }
 
-.searchButton:active .fa {
+.searchButton:active .searchIcon {
 	color: lightgrey;
 }
 
-.fa {
+.searchIcon {
 	font-size: 24px;
 	color: grey;
 }
 
 .search:focus {
 	outline: none;
+}
+
+.checkboxContainer {
+	display: inline-block;
+	user-select: none;
+}
+
+.checkboxContainer:hover {
+	cursor: pointer;
+}
+
+.filterInput {
+	display: none
+}
+
+.filterCheckbox {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid gray;
+	border-radius: 3px;
+	margin-left: 20px;
+	margin-right: 5px;
+}
+
+.checkmarkIcon {
+	position: absolute;
+	font-size: 18px;
+	color: grey;
+}
+
+.filterLabel {
+	font-size: 28px;
+	color: grey;
+	font-family: "Arial";
 }
 
 #map {
@@ -66,5 +101,5 @@ body {
 
 .areaLabel {
 	padding-left: 15px;
-    font-size: large;
+	font-size: large;
 }

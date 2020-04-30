@@ -1,7 +1,12 @@
 var map = null;
+var markerData = {};
 var temporaryMarker = null;
-var infoWindows = [];
-var codesToCoordinates = {};
+
+const Filtertype = {
+	TRAINED: 1,
+	UNTRAINED: 2,
+	STREET_CHAMPIONS: 3
+};
 
 $(document).ready(function() {
 	var search = document.getElementById("searchInput");
@@ -10,6 +15,9 @@ $(document).ready(function() {
 			document.getElementById("searchButton").click();
 		}
 	});
+	runFilter(document.getElementById("trainedInput"), document.getElementById("trainedFilter"), true, Filtertype.TRAINED);
+	runFilter(document.getElementById("untrainedInput"), document.getElementById("untrainedFilter"), true, Filtertype.UNTRAINED);
+	runFilter(document.getElementById("streetChampionsInput"), document.getElementById("streetChampionsFilter"), true, Filtertype.STREET_CHAMPIONS);
 });
 
 function initMap() {
@@ -24,8 +32,8 @@ function initMap() {
 		var volunteerData = JSON.parse(xmlHttp.response);
 		setupMap(volunteerData.feed.entry);
 	}
-	xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json", true);
-	xmlHttp.send(null);
+	xmlHttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1V4F02LbP8feQXTKX_l1ES9kv4udM09l59KPWr4r4J9w/1/public/full?alt=json");
+	xmlHttp.send();
 }
 
 function setupMap(entries) {
@@ -85,7 +93,6 @@ function createAreas() {
 
 function createMarkers(entries) {
 	var postalCodes = [];
-	var markerData = {};
 	var rowIndex = 8;
 	while (true) {
 		if (!entries[rowIndex]) {
@@ -146,8 +153,8 @@ function createMarkers(entries) {
 				closeAllInfoWindows();
 				infoWindow.open(map, marker);
 			});
-			codesToCoordinates[postalCode] = marker;
-			infoWindows.push(infoWindow);
+			markerData[postalCode].marker = marker;
+			markerData[postalCode].infoWindow = infoWindow;
 		});
 	}
 	xmlHttp.open("POST", "https://api.postcodes.io/postcodes");
@@ -206,7 +213,7 @@ function searchForPostalCode(postalCode) {
 		return;
 	}
 	var homogenizedPostalCode = homogenizePostalCode(postalCode);
-	if (!(homogenizedPostalCode in codesToCoordinates)) {
+	if (!(homogenizedPostalCode in Object.keys(markerData))) {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState != 4) {
@@ -252,9 +259,9 @@ function searchForPostalCode(postalCode) {
 		xmlHttp.send();
 		return;
 	}
-	map.setCenter(codesToCoordinates[homogenizedPostalCode].position);
+	map.setCenter(markerData[homogenizedPostalCode].marker.position);
 	map.setZoom(17);
-	google.maps.event.trigger(codesToCoordinates[homogenizedPostalCode], 'click');
+	google.maps.event.trigger(markerData[homogenizedPostalCode].marker, 'click');
 }
 
 function isInfoWindowOpen(infoWindow) {
@@ -263,7 +270,7 @@ function isInfoWindowOpen(infoWindow) {
 }
 
 function closeAllInfoWindows() {
-	infoWindows.forEach(infoWindow => infoWindow.close());
+	Object.keys(markerData).forEach(key => markerData[key].infoWindow.close());
 }
 
 function getHighestLatitudeCoordinates(pairs) {
@@ -286,4 +293,18 @@ function normalizePostalCode(originalText) {
 	var normalizedText = originalText.toUpperCase();
 	normalizedText = normalizedText.substring(0, 4) + " " + normalizedText.substring(4);
 	return normalizedText;
+}
+
+function runFilter(input, checkbox, setChecked, filterType) {
+	closeAllInfoWindows();
+	input.checked = setChecked;
+	if (setChecked) {
+		checkbox.firstElementChild.style.display = "inline-block";
+	} else {
+		checkbox.firstElementChild.style.display = "none";
+	}
+	if (filterType == Filtertype.TRAINED) {
+	} else if (filterType == Filtertype.UNTRAINED) {
+	} else if (filterType == Filtertype.STREET_CHAMPIONS) {
+	} 
 }
