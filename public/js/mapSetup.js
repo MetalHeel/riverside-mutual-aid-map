@@ -161,7 +161,7 @@ function createMarkers(entries) {
 	}
 	xmlHttp.open("POST", "https://api.postcodes.io/postcodes");
 	xmlHttp.setRequestHeader("Content-Type", "application/json");
-	xmlHttp.send(JSON.stringify({"postcodes": postalCodes}));
+	xmlHttp.send(JSON.stringify({"postcodes": Object.keys(markerData)}));
 }
 
 function validateVolunteerData(entries, startingIndex) {
