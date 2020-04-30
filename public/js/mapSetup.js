@@ -151,6 +151,10 @@ function createMarkers(entries) {
 				}
 			});
 			marker.addListener('click', function() {
+				if (isInfoWindowOpen(infoWindow)) {
+					infoWindow.close();
+					return;
+				}
 				closeAllInfoWindows();
 				infoWindow.open(map, marker);
 			});
