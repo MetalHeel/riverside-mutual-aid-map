@@ -15,21 +15,21 @@
 	<button id="searchButton" class="searchButton" onclick="searchForPostalCode(document.getElementById('searchInput').value)">
 		<i class="fa fa-search searchIcon"></i>
 	</button>
-	<div class="checkboxContainer" onclick="runFilter(document.getElementById('trainedInput'), this.children[1], !document.getElementById('trainedInput').checked, Filtertype.TRAINED)">
+	<div class="checkboxContainer" onclick="toggleCheckbox(this.children[0], this.children[1], Filtertype.TRAINED); filterAndDisplayData();">
 		<input id="trainedInput" type="checkbox" class="filterInput">
 		<span id="trainedFilter" class="filterCheckbox">
 			<i class="fa fa-check checkmarkIcon"></i>
 		</span>
 		<span id="trainedLabel" class="filterLabel">Trained</span>
 	</div>
-	<div class="checkboxContainer" onclick="runFilter(document.getElementById('untrainedInput'), this.children[1], !document.getElementById('untrainedInput').checked, Filtertype.UNTRAINED)">
+	<div class="checkboxContainer" onclick="toggleCheckbox(this.children[0], this.children[1], Filtertype.UNTRAINED); filterAndDisplayData();">
 		<input id="untrainedInput" type="checkbox" class="filterInput">
 		<span id="untrainedFilter" class="filterCheckbox">
 			<i class="fa fa-check checkmarkIcon"></i>
 		</span>
 		<span id="untrainedLabel" class="filterLabel">Untrained</span>
 	</div>
-	<div class="checkboxContainer" onclick="runFilter(document.getElementById('streetChampionsInput'), this.children[1], !document.getElementById('streetChampionsInput').checked, Filtertype.STREET_CHAMPIONS)" >
+	<div class="checkboxContainer" onclick="toggleCheckbox(this.children[0], this.children[1], Filtertype.STREET_CHAMPIONS); filterAndDisplayData();" >
 		<input id="streetChampionsInput" type="checkbox" class="filterInput">
 		<span id="streetChampionsFilter" class="filterCheckbox">
 			<i class="fa fa-check checkmarkIcon"></i>

@@ -2,6 +2,10 @@ var map = null;
 var markerData = {};
 var temporaryMarker = null;
 
+var showTrained = true;
+var showUntrained = false;
+var showStreetChampions = true;
+
 const Filtertype = {
 	TRAINED: 1,
 	UNTRAINED: 2,
@@ -9,15 +13,26 @@ const Filtertype = {
 };
 
 $(document).ready(function() {
+	// Allow "Enter" button to be hit to search for postal codes.
 	var search = document.getElementById("searchInput");
 	search.addEventListener("keyup", function(event) {
 		if (event.keyCode === 13) {
 			document.getElementById("searchButton").click();
 		}
 	});
-	runFilter(document.getElementById("trainedInput"), document.getElementById("trainedFilter"), true, Filtertype.TRAINED);
-	runFilter(document.getElementById("untrainedInput"), document.getElementById("untrainedFilter"), true, Filtertype.UNTRAINED);
-	runFilter(document.getElementById("streetChampionsInput"), document.getElementById("streetChampionsFilter"), true, Filtertype.STREET_CHAMPIONS);
+	// Initial filter UI configuration.
+	document.getElementById("trainedInput").checked = showTrained;
+	if (!showTrained) {
+		document.getElementById("trainedFilter").firstElementChild.style.display = "none";
+	}
+	document.getElementById("untrainedInput").checked = showUntrained;
+	if (!showUntrained) {
+		document.getElementById("untrainedFilter").firstElementChild.style.display = "none";
+	}
+	document.getElementById("streetChampionsInput").checked = showStreetChampions;
+	if (!showStreetChampions) {
+		document.getElementById("streetChampionsFilter").firstElementChild.style.display = "none";
+	}
 });
 
 function initMap() {
@@ -83,16 +98,15 @@ function createAreas() {
 		//Add to the legend.
 		var div = document.createElement('div');
 		div.innerHTML = '<svg width="20" height="13">' +
-			'<rect width="20" height="13" style="fill:' + areas[key].fillColor + '; stroke-width:1.8; stroke:' + areas[key].lineColor + '" />' +
-		'</svg>' + 
-		'<span class="areaLabel">' + key + '</span>';
+				'<rect width="20" height="13" style="fill:' + areas[key].fillColor + '; stroke-width:1.8; stroke:' + areas[key].lineColor + '" />' +
+			'</svg>' + 
+			'<span class="areaLabel">' + key + '</span>';
 		legend.appendChild(div);
 	});
 	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 }
 
 function createMarkers(entries) {
-	var postalCodes = [];
 	var rowIndex = 8;
 	while (true) {
 		if (!entries[rowIndex]) {
@@ -102,10 +116,7 @@ function createMarkers(entries) {
 			break;
 		}
 		var postalCode = homogenizePostalCode(entries[rowIndex + 3].content["$t"]);
-		if (!postalCodes.includes(postalCode)) {
-			postalCodes.push(postalCode);
-		}
-		if (!markerData.hasOwnProperty(postalCode)) {
+		if (!(postalCode in markerData)) {
 			markerData[postalCode] = {
 				"volunteers": [],
 				"trainingDates": [],
@@ -132,34 +143,25 @@ function createMarkers(entries) {
 		var locationData = JSON.parse(xmlHttp.response);
 		locationData.result.forEach(entry => {
 			var postalCode = homogenizePostalCode(entry.result.postcode);
-			var infoWindowContent = generateVolunteerDataContent(markerData[postalCode], postalCode);
-			var infoWindow = new google.maps.InfoWindow({
-				content: infoWindowContent,
-				zIndex: 2
-			});
+			var infoWindow = new google.maps.InfoWindow({ zIndex: 2 });
 			var marker = new google.maps.Marker({
 				position: {
 					lat: entry.result.latitude,
 					lng: entry.result.longitude
-				},
-				label: markerData[postalCode].volunteers.length.toString(10),
-				map: map
+				}
 			});
 			marker.addListener('click', function() {
-				if (isInfoWindowOpen(infoWindow)) {
-					infoWindow.close();
-					return;
-				}
 				closeAllInfoWindows();
 				infoWindow.open(map, marker);
 			});
 			markerData[postalCode].marker = marker;
 			markerData[postalCode].infoWindow = infoWindow;
 		});
+		filterAndDisplayData();
 	}
 	xmlHttp.open("POST", "https://api.postcodes.io/postcodes");
 	xmlHttp.setRequestHeader("Content-Type", "application/json");
-	xmlHttp.send(JSON.stringify({"postcodes" : postalCodes}));
+	xmlHttp.send(JSON.stringify({"postcodes": postalCodes}));
 }
 
 function validateVolunteerData(entries, startingIndex) {
@@ -194,15 +196,15 @@ function validateVolunteerData(entries, startingIndex) {
 	return true;
 }
 
-function generateVolunteerDataContent(data, postalCode) {
+function generateVolunteerDataContent(volunteers, trainingDates, isStreetChampionList, isTrainedList, isInterestedList, postalCode) {
 	var content = "<span style=\"font-weight:bold;\">" + normalizePostalCode(postalCode) + "</span>";
-	for (var i = 0; i < data.volunteers.length; i++) {
-		content +=  "<h3 style=\"text-align: center;\">" + data.volunteers[i] + "</h3>" +
+	for (var i = 0; i < volunteers.length; i++) {
+		content +=  "<h3 style=\"text-align: center;\">" + volunteers[i] + "</h3>" +
 			"<ul>" +
-				"<li>Training Date: " + data.trainingDates[i] + "</li>" +
-				"<li>Street Champion: " + data.streetChampion[i] + "</li>" +
-				"<li>Trained: " + data.trained[i] + "</li>" +
-				"<li>Interested in Being Street Champion: " + data.interestedInChampion[i] + "</li>" +
+				"<li>Training Date: " + trainingDates[i] + "</li>" +
+				"<li>Street Champion: " + isStreetChampionList[i] + "</li>" +
+				"<li>Trained: " + isTrainedList[i] + "</li>" +
+				"<li>Interested in Being Street Champion: " + isInterestedList[i] + "</li>" +
 			"</ul>";
 	}
 	return content;
@@ -295,16 +297,53 @@ function normalizePostalCode(originalText) {
 	return normalizedText;
 }
 
-function runFilter(input, checkbox, setChecked, filterType) {
-	closeAllInfoWindows();
-	input.checked = setChecked;
-	if (setChecked) {
+function toggleCheckbox(input, checkbox, filterType) {
+	input.checked = !input.checked;
+	if (input.checked) {
 		checkbox.firstElementChild.style.display = "inline-block";
 	} else {
 		checkbox.firstElementChild.style.display = "none";
 	}
 	if (filterType == Filtertype.TRAINED) {
+		showTrained = input.checked;
 	} else if (filterType == Filtertype.UNTRAINED) {
+		showUntrained = input.checked;
 	} else if (filterType == Filtertype.STREET_CHAMPIONS) {
-	} 
+		showStreetChampions = input.checked;
+	}
+}
+
+function filterAndDisplayData() {
+	closeAllInfoWindows();
+	Object.keys(markerData).forEach(function (key) {
+		var volunteers = [];
+		var trainingDates = [];
+		var streetChampion = [];
+		var trained = [];
+		var interestedInChampion = [];
+		var data = markerData[key];
+		for (var i = 0; i < data.volunteers.length; i++) {
+			if (!showUntrained && data.trained[i].toLowerCase() === "no") {
+				continue;
+			}
+			if (!showTrained && data.trained[i].toLowerCase() === "yes") {
+				continue;
+			}
+			if (!showStreetChampions && data.streetChampion[i].toLowerCase() === "yes") {
+				continue;
+			}
+			volunteers.push(data.volunteers[i]);
+			trainingDates.push(data.trainingDates[i]);
+			streetChampion.push(data.streetChampion[i]);
+			trained.push(data.trained[i]);
+			interestedInChampion.push(data.interestedInChampion[i]);
+		}
+		if (volunteers.length == 0) {
+			data.marker.setMap(null);
+			continue;
+		}
+		data.marker.setLabel(volunteers.length.toString(10))
+		data.marker.setMap(map);
+		data.infoWindow.setContent(generateVolunteerDataContent(volunteers, trainingDates, streetChampion, trained, interestedInChampion, key));
+	});
 }
