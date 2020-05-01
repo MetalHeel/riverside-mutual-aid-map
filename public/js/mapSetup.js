@@ -268,6 +268,7 @@ function searchForPostalCode(postalCode) {
 	if (!markerData[homogenizedPostalCode].marker.getMap()) {
 		return;
 	}
+	markerData[homogenizedPostalCode].marker.setMap(map);
 	map.setCenter(markerData[homogenizedPostalCode].marker.position);
 	map.setZoom(17);
 	google.maps.event.trigger(markerData[homogenizedPostalCode].marker, 'click');
