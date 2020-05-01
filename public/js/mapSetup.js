@@ -265,6 +265,9 @@ function searchForPostalCode(postalCode) {
 		xmlHttp.send();
 		return;
 	}
+	if (!markerData[homogenizedPostalCode].marker.getMap()) {
+		return;
+	}
 	map.setCenter(markerData[homogenizedPostalCode].marker.position);
 	map.setZoom(17);
 	google.maps.event.trigger(markerData[homogenizedPostalCode].marker, 'click');
