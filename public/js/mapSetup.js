@@ -330,13 +330,17 @@ function filterAndDisplayData() {
 		var interestedInChampion = [];
 		var data = markerData[key];
 		for (var i = 0; i < data.volunteers.length; i++) {
-			if (!showUntrained && data.trained[i].toLowerCase() === "no") {
-				continue;
+			var showMarker = false;
+			if (showUntrained && data.trained[i].toLowerCase() === "no") {
+				showMarker = true;
 			}
-			if (!showTrained && data.trained[i].toLowerCase() === "yes") {
-				continue;
+			if (showTrained && data.trained[i].toLowerCase() === "yes") {
+				showMarker = true;
 			}
-			if (!showStreetChampions && data.streetChampion[i].toLowerCase() === "yes") {
+			if (showStreetChampions && data.streetChampion[i].toLowerCase() === "yes") {
+				showMarker = true;
+			}
+			if (!showMarker) {
 				continue;
 			}
 			volunteers.push(data.volunteers[i]);
