@@ -4,7 +4,7 @@ var temporaryMarker = null;
 
 var showTrained = true;
 var showUntrained = false;
-var showStreetChampions = true;
+var showStreetChampions = false;
 
 const Filtertype = {
 	TRAINED: 1,
